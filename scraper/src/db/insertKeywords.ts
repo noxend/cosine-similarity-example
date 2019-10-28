@@ -21,8 +21,8 @@ db.connect((err: MysqlError) => {
 (function main() {
   const content = <Array<IJobData>>JSON.parse(readFileSync('jobs.json', 'utf8'));
   const skilsarr: Array<string> = [];
-  content.map(({ skils }) => {
-    (skils as string).split(':|:').map(skil => {
+  content.map(({ keywords }) => {
+    (keywords as string).split(':|:').map(skil => {
       skilsarr.push(skil);
     });
   });

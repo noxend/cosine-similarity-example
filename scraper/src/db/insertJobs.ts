@@ -23,9 +23,9 @@ db.connect((err: MysqlError) => {
   const content = <Array<IJobData>>JSON.parse(readFileSync('jobs.json', 'utf8'));
 
   content.map(
-    ({ jobName, company, city, number, contactPerson, url, skils, address, phone, site, salary }) => {
+    ({ jobName, company, city, number, contactPerson, url, keywords, address, phone, site, salary }) => {
       db.query(
-        `INSERT IGNORE INTO jobs (jobName, company, city, number, contactPerson, url, skils, address, phone, site, salary) VALUES ("${jobName}", "${company}", "${city}", "${number}", "${contactPerson}", "${url}", "${skils}", "${address}", "${phone}", "${site}", "${salary}");`
+        `INSERT IGNORE INTO jobs (jobName, company, city, number, contactPerson, url, skils, address, phone, site, salary) VALUES ("${jobName}", "${company}", "${city}", "${number}", "${contactPerson}", "${url}", "${keywords}", "${address}", "${phone}", "${site}", "${salary}");`
       );
     }
   );

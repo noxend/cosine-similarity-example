@@ -13,11 +13,12 @@ const db: Datebase = Datebase.init();
 (async function main() {
   const scraper = <RobotaUA>ScraperFactory.crate('robotaua');
   const data: Array<IJobData> = await scraper.getJobsUrl();
+  console.log(data.length)
   for (const el of data) {
     const result = await scraper.getDetails(el);
     try {
       await db.query(query.insertJob(result));
-      (result.skils as string).split(':|:').map(keyword => {
+      (result.keywords as string).split(':|:').map(keyword => {
         db.query(query.insertKeyword(keyword));
       });
     } catch (err) {}

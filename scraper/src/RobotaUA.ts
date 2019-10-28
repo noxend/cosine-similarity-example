@@ -51,7 +51,7 @@ export default class WorkUA extends ScraperAbstract {
 
   async getJobsUrl(): Promise<Array<IJobData>> {
     const urls: Array<IJobData> = [];
-    for (let i = this.config.startWith; i < this.pages; i++) {
+    for (let i = this.config.startWith; i <= this.pages; i++) {
       const url: string = `https://rabota.ua/ua/jobsearch/vacancy_list?pg=${i}`;
       process.stdout.write(chalk.green.bold(`Getting jobs url ${this.processedUrls}/${this.config.jobs}`));
 
@@ -149,7 +149,7 @@ export default class WorkUA extends ScraperAbstract {
       contactPerson: '',
       jobName: '',
       url: '',
-      skils: '',
+      keywords: '',
       phone: '',
       site: '',
       salary: ''
@@ -254,7 +254,7 @@ export default class WorkUA extends ScraperAbstract {
           .trim()
           .replace(/\'/g, "''");
 
-    obj.skils = skils.join(':|:').replace(/\'/g, "''");
+    obj.keywords = skils.join(':|:').replace(/\'/g, "''");
 
     return obj;
   }

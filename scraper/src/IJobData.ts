@@ -5,7 +5,7 @@ export default interface IJobData {
   number?: string;
   contactPerson?: string;
   url?: string;
-  skils?: string;
+  keywords?: string;
   address?: string;
   phone?: string;
   site?: string;

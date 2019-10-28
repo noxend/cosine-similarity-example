@@ -8,15 +8,15 @@ export default {
     number,
     contactPerson,
     url,
-    skils,
+    keywords,
     address,
     phone,
     site,
     salary
   }: IJobData): string {
-    return `INSERT INTO jobs (jobName, company, city, number, contactPerson, url, skils, address, phone, site, salary) VALUES ('${jobName}', '${company}', '${city}', '${number}', '${contactPerson}', '${url}', '${skils}', '${address}', '${phone}', '${site}', '${salary}');`;
+    return `INSERT INTO jobs (jobName, company, city, number, contactPerson, url, keywords, address, phone, site, salary) VALUES ('${jobName}', '${company}', '${city}', '${number}', '${contactPerson}', '${url}', '${keywords}', '${address}', '${phone}', '${site}', '${salary}');`;
   },
   insertKeyword(keyword: string): string {
-    return `INSERT IGNORE INTO skills (skill) VALUES ('${keyword}');`;
+    return `INSERT IGNORE INTO keywords (keyword) VALUES ('${keyword}');`;
   }
 };

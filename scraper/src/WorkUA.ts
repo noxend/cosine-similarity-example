@@ -102,7 +102,7 @@ export default class WorkUA extends ScraperAbstract {
       contactPerson: 'none',
       jobName: 'none',
       url: 'none',
-      skils: 'none'
+      keywords: 'none'
     };
 
     obj.jobName = $('h1.add-top-sm').text();
