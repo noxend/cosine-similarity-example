@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "migrate": "db-migrate --config database.json"
+    "migrate": "db-migrate --config database.json",
+    "watch": "tsc -p ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mysql": "^2.15.7",
     "db-migrate": "^0.11.6",
-    "db-migrate-mysql": "^1.1.10"
+    "db-migrate-mysql": "^1.1.10",
+    "mysql": "^2.17.1"
   }
 }

@@ -17,7 +17,7 @@ import Database from './db/Database';
 
   app.get('/api/keywords', (req: Request, res: Response, next: NextFunction) => {
     db.query(
-      `SELECT * FROM skills WHERE (skill LIKE '%${req.query.keyword}%') LIMIT 10;`,
+      `SELECT * FROM keywords WHERE (keyword LIKE '%${req.query.keyword}%') LIMIT 10;`,
       (err, result: Array<object>) => {
         res.json(result);
       }

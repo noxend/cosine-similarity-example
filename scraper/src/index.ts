@@ -13,7 +13,6 @@ const db: Datebase = Datebase.init();
 (async function main() {
   const scraper = <RobotaUA>ScraperFactory.crate('robotaua');
   const data: Array<IJobData> = await scraper.getJobsUrl();
-  console.log(data.length)
   for (const el of data) {
     const result = await scraper.getDetails(el);
     try {
