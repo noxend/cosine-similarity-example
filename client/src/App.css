@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+}
+
+input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+}
+
+input::placeholder {
+  color: rgb(182, 182, 182);
+  /* text-align: center; */
+}
+
+.search {
+  width: 860px;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.search > div {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: 0.2s;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  padding: 0 16px;
+  /* position: relative; */
+}
+
+.kwrds__tags {
+  display: flex;
+  align-items: center;
+}
+
+.kwrds__tag {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid #d9d9d9;
+  padding: 2px 10px;
+  white-space: nowrap;
+  max-width: 80px;
+  font-size: 12px;
+  background-color: #fafafa;
+}
+
+.kwrds__tag:hover {
+  text-decoration: line-through;
+  max-width: none;
+}
+
+.kwrds__tag:not(:last-child) {
+  margin-right: 8px;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  padding: 0 20px;
+  height: 40px;
+}
+
+.keywords__list {
+  width: 100%;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.list__item--active {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  padding: 0 20px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.list__item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav {
+  padding: 8px 0;
+  height: 64px;
+  background-color: #fafafa;
+  /* height: 64px; */
+  display: flex;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.already__slctd {
+  animation: anim;
+  animation-duration: .3s;
+}
+
+@keyframes anim {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+    color: #f5222d;
+    background-color: #fff1f0;
+    border-color: #ffa39e;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
