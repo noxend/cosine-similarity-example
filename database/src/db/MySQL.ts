@@ -1,6 +1,7 @@
-import mysql, { Connection, queryCallback } from 'mysql';
+import mysql, { Connection } from 'mysql';
+import IDatabase from './IDatabase';
 
-export default class Datebase {
+export default class Datebase implements IDatabase  {
   private static instance: Datebase;
   private db: Connection = mysql.createConnection({
     host: 'localhost',
@@ -16,8 +17,13 @@ export default class Datebase {
     return Datebase.instance;
   }
 
-  public connect(cb?: Function) {
-    this.db.connect(cb);
+  public connect(): Promise<void> {
+    return new Promise((resolve, rejects) => {
+      this.db.connect((err) => {
+        if(err) rejects(err);
+        else resolve();
+      });
+    });
   }
 
   public close(): Promise<void> {
@@ -29,7 +35,7 @@ export default class Datebase {
     });
   }
 
-  public query(query: string): Promise<void> {
+  public query(query: string): Promise<any> {
     return new Promise((resolve, rejects) => {
       this.db.query(query, (err, results) => {
         if (err) rejects(err);

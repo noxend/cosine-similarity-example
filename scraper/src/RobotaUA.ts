@@ -50,7 +50,7 @@ export default class WorkUA extends ScraperAbstract {
   }
 
   async getJobsUrl(): Promise<Array<IJobData>> {
-    const urls: Array<IJobData> = [];
+    const urls: Array<object> = [];
     for (let i = this.config.startWith; i <= this.pages; i++) {
       const url: string = `https://rabota.ua/ua/jobsearch/vacancy_list?pg=${i}`;
       process.stdout.write(chalk.green.bold(`Getting jobs url ${this.processedUrls}/${this.config.jobs}`));
@@ -60,6 +60,10 @@ export default class WorkUA extends ScraperAbstract {
       const $ = cheerio.load(content);
       $('h3.fd-beefy-gunso.f-vacancylist-vacancytitle').each((index, element) => {
         urls.push({
+          companyUrl: `https://rabota.ua${$(element)
+            .next()
+            .children()
+            .attr('href')}`,
           company: $(element)
             .next()
             .children()
@@ -168,7 +172,8 @@ export default class WorkUA extends ScraperAbstract {
           <boolean>title.toLowerCase().includes('метро') ||
           <boolean>title.toLowerCase().includes('місце роботи') ||
           <boolean>title.toLowerCase().includes('трц') ||
-          <boolean>title.toLowerCase().includes('вид зайнятості')
+          <boolean>title.toLowerCase().includes('вид зайнятості') ||
+          <boolean>title.toLowerCase().includes('рівень') 
         )
       ) {
         $(element)

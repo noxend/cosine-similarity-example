@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
+import loupe from './loupe.svg';
 
 class App extends React.Component {
   state = {
@@ -9,7 +10,8 @@ class App extends React.Component {
     slctdKeywords: [],
     focus: 0,
     isFocus: false,
-    alreadySlctd: null
+    alreadySlctd: null,
+    jobs: []
   };
 
   componentDidMount = async () => {};
@@ -81,69 +83,108 @@ class App extends React.Component {
       this.setState({ alreadySlctd: index });
     }
   };
-
-  onFocus = e => {
-    console.log('as');
+  onSubmit = async e => {
+    e.preventDefault();
+    const { data } = await axios.get('/api/jobs', { params: this.state.slctdKeywords });
+    console.log('oke', data);
+    this.setState({
+      jobs: data
+    });
   };
 
   render = () => {
     return (
-      <div className="nav">
-        <div className="search">
-          <div
-            style={{
-              boxShadow: `${
-                this.state.isFocus ? '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)' : ''
-              }`
-            }}
-          >
-            <div className="input">
-              <div className="kwrds__tags">
-                {this.state.slctdKeywords.map((keyword, index) => {
-                  return (
-                    <div
-                      className={`kwrds__tag ${index === this.state.alreadySlctd ? 'already__slctd' : ''}`}
-                      key={keyword}
-                      onClick={this.deleteTag}
-                    >
-                      {keyword}
-                    </div>
-                  );
-                })}
+      <React.Fragment>
+        <div className="nav">
+          <div className="search">
+            <div
+              style={{
+                boxShadow: `${
+                  this.state.isFocus ? '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)' : ''
+                }`
+              }}
+            >
+              <div className="input">
+                <div className="kwrds__tags">
+                  {this.state.slctdKeywords.map((keyword, index) => {
+                    return (
+                      <div
+                        className={`kwrds__tag ${index === this.state.alreadySlctd ? 'already__slctd' : ''}`}
+                        key={keyword}
+                        onClick={this.deleteTag}
+                      >
+                        {keyword}
+                      </div>
+                    );
+                  })}
+                </div>
+                <form onSubmit={this.onSubmit}>
+                  <input
+                    type="text"
+                    onChange={this.onChange}
+                    name="input"
+                    value={this.state.value}
+                    onKeyDown={this.onKeyDown}
+                    onFocus={() => {
+                      this.setState({ isFocus: true });
+                    }}
+                    onBlur={() => {
+                      this.setState({ isFocus: false });
+                    }}
+                    placeholder="Виберіть свої навички"
+                  />
+                  <button className="submit__btn">
+                    <img src={loupe} width="30px" />
+                  </button>
+                </form>
               </div>
-              <input
-                type="text"
-                onChange={this.onChange}
-                name="input"
-                value={this.state.value}
-                onKeyDown={this.onKeyDown}
-                onFocus={() => {
-                  this.setState({ isFocus: true });
-                }}
-                onBlur={() => {
-                  this.setState({ isFocus: false });
-                }}
-                placeholder="Виберіть свої навички"
-              />
+              {this.state.keywords.length > 0 && (
+                <div className="keywords__list">
+                  {this.state.keywords.map((value, index) => {
+                    return (
+                      <div
+                        key={value}
+                        onClick={this.onClick}
+                        className={`list__item${index === this.state.focus ? '--active' : ''}`}
+                      >
+                        {value}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-            {this.state.keywords.length > 0 && (
-              <div className="keywords__list">
-                {this.state.keywords.map((value, index) => {
-                  return (
-                    <div
-                      key={value}
-                      onClick={this.onClick}
-                      className={`list__item${index === this.state.focus ? '--active' : ''}`}
-                    >
-                      {value}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </div>
         </div>
-      </div>
+        <div>
+          <div className="jobs">
+            {this.state.jobs.map(job => {
+              return (
+                <div className="job__item" key={job.id}>
+                  <div>
+                    <a target="_blank" className="job__title" href={job.url}>
+                      {job.jobName}
+                    </a>
+                    <span className="job__city">{job.city}</span>
+                  </div>
+                  <a target="_blank" href={job.companyUrl} className="job__company">
+                    {job.company}
+                  </a>
+                  <div className="job__keywords">
+                    {job.description.split(':|:').map(keyword => {
+                      return (
+                        <div className="job__keyword" key={keyword}>
+                          #{keyword}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </React.Fragment>
     );
   };
 }

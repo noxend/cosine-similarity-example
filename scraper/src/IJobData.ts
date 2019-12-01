@@ -10,4 +10,5 @@ export default interface IJobData {
   phone?: string;
   site?: string;
   salary?: string;
+  [key: string]: any;
 }

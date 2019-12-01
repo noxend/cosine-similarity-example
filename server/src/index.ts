@@ -1,74 +1,41 @@
 import express, { Request, Response, NextFunction, Express } from 'express';
 import { MysqlError } from 'mysql';
 import bodyParser from 'body-parser';
-import Database from './db/Database';
+import { DatabaseFactory, query } from './db';
+
+const app: Express = express();
+const db = DatabaseFactory.create('mysql');
 
 (function main() {
-  const app: Express = express();
-  const db = new Database();
-
-  db.connect((err: MysqlError) => {
-    if (err) throw err;
-    process.stdout.write('\nMySQL Connected...');
-  });
+  db.connect()
+    .then(() => {
+      process.stdout.write('\nMySQL Connected...');
+    })
+    .catch(err => {
+      throw err;
+    });
 
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
   app.get('/api/keywords', (req: Request, res: Response, next: NextFunction) => {
-    db.query(
-      `SELECT * FROM keywords WHERE (keyword LIKE '%${req.query.keyword}%') LIMIT 10;`,
-      (err, result: Array<object>) => {
-        res.json(result);
+    db.query(`SELECT * FROM keywords WHERE (keyword LIKE '%${req.query.keyword}%') LIMIT 10;`).then(
+      result => {
+        res.send(result);
       }
     );
   });
 
-  app.get('/jobs', (req: Request, res: Response, next: NextFunction) => {
-    const keywords = ['java', 'sql', 'студ'];
+  app.get('/api/jobs', (req: Request, res: Response, next: NextFunction) => {
+    const keywords = req.query;
 
-    switch (keywords.length) {
-      case 1:
-        db.query(`SELECT * FROM jobs WHERE (skils LIKE '%${keywords[0]}%')`, (err, result: Array<object>) => {
-          res.json(result);
-        });
-        break;
-      case 2:
-        db.query(
-          `SELECT * FROM jobs WHERE (skils LIKE '%${keywords[0]}%') AND (skils LIKE '%${keywords[1]}%')`,
-          (err, result: Array<object>) => {
-            res.json(result);
-          }
-        );
-        break;
-      case 3:
-        db.query(
-          `SELECT * FROM jobs WHERE (skils LIKE '%${keywords[0]}%') AND (skils LIKE '%${keywords[1]}%') AND (skils LIKE '%${keywords[2]}%')`,
-          (err, result: Array<object>) => {
-            res.json(result);
-          }
-        );
-        break;
-      case 4:
-        db.query(
-          `SELECT * FROM jobs WHERE (skils LIKE '%${keywords[0]}%') AND (skils LIKE '%${keywords[1]}%') AND (skils LIKE '%${keywords[2]}%') AND (skils LIKE '%${keywords[3]}%')`,
-          (err, result: Array<object>) => {
-            res.json(result);
-          }
-        );
-        break;
-      case 5:
-        db.query(
-          `SELECT * FROM jobs WHERE (skils LIKE '%${keywords[0]}%') AND (skils LIKE '%${keywords[1]}%') AND (skils LIKE '%${keywords[2]}%') AND (skils LIKE '%${keywords[3]}%') AND (skils LIKE '%${keywords[4]}%')`,
-          (err, result: Array<object>) => {
-            res.json(result);
-          }
-        );
-        break;
-
-      default:
-        break;
-    }
+    Object.keys(keywords).forEach(key => {
+      keywords[key] = `${keywords[key]}`.replace(/\'/g, "''");
+    });
+    
+    db.query(query.getJobsByKeys(Object.values(keywords))).then(result => {
+      res.send(result);
+    });
   });
 
   app.listen(5500, () => {

@@ -28,18 +28,37 @@ input::placeholder {
 .search > div {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: 0.2s;
+  z-index: 9999;
 }
 
 .input {
   display: flex;
   flex-direction: row;
-  padding: 0 16px;
+  /* padding: 0 16px; */
   /* position: relative; */
+}
+
+.submit__btn {
+  cursor: pointer;
+  background-color: #7986CB;
+  border: none;
+  transition: .2s;
+  padding: 0 10px;
+}
+
+.submit__btn:hover {
+  background-color: #5C6BC0;
+}
+
+.input form {
+  display: flex;
+  width: 100%;
 }
 
 .kwrds__tags {
   display: flex;
   align-items: center;
+  padding-left: 16px;
 }
 
 .kwrds__tag {
@@ -104,7 +123,7 @@ input::placeholder {
 
 .already__slctd {
   animation: anim;
-  animation-duration: .3s;
+  animation-duration: 0.3s;
 }
 
 @keyframes anim {
@@ -120,4 +139,36 @@ input::placeholder {
   100% {
     transform: translateY(0);
   }
+}
+
+.jobs {
+  width: 860px;
+  margin: 0 auto;
+}
+
+.job__item {
+  padding: 20px;
+}
+
+.job__keywords {
+  display: flex;
+}
+
+.job__keyword {
+  font-size: 12px;
+  margin-right: 8px;
+  color: #919191;
+}
+
+.job__title {
+  font-size: 16px;
+}
+
+.job__city {
+  margin-left: 8px;
+}
+
+.job__company {
+  color: #5C6BC0;
+  font-size: 12px;
 }
