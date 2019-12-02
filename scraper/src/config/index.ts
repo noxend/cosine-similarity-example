@@ -7,7 +7,7 @@ export = {
     },
     robotaua: {
       startWith: 1,
-      jobs: 100,
+      jobs: 2000,
       displayStatus: true,
       way: 'axios' //Enum: puppeteer, axios. Default: axios
     }

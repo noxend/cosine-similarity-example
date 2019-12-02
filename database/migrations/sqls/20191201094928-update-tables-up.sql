@@ -37,3 +37,10 @@ CREATE TABLE `salary` (
   `to` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `results` (
+  `id` int(11) NOT NULL,
+  `job_id` int(11) DEFAULT NULL,
+  `k` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

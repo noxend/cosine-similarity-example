@@ -42,20 +42,20 @@ export default {
     COUNT(DISTINCT k.keyword) AS count,
     GROUP_CONCAT(DISTINCT k.keyword
         SEPARATOR ':|:') AS keywords
-  FROM
-    k_to_j
-        JOIN
-    job j ON k_to_j.job_id = j.id
-        JOIN
-    c_to_j ON c_to_j.job_id = j.id
-        JOIN
-    company c ON c_to_j.company_id = c.id
-        JOIN
-    keywords k ON k_to_j.keyword_id = k.id
-    WHERE ${keys
-      .map((keyword, i) => `(k.keyword LIKE '${keyword}') ${i + 1 !== keys.length ? 'OR' : ''}`)
-      .join(' ')}
-  GROUP BY j.url
-  ORDER BY count DESC;`;
+    FROM
+      k_to_j
+          JOIN
+      job j ON k_to_j.job_id = j.id
+          JOIN
+      c_to_j ON c_to_j.job_id = j.id
+          JOIN
+      company c ON c_to_j.company_id = c.id
+          JOIN
+      keywords k ON k_to_j.keyword_id = k.id
+      WHERE ${keys
+        .map((keyword, i) => `(k.keyword LIKE '${keyword}') ${i + 1 !== keys.length ? 'OR' : ''}`)
+        .join(' ')}
+    GROUP BY j.url
+    ORDER BY count DESC;`;
   }
 };

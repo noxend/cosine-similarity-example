@@ -163,7 +163,7 @@ class App extends React.Component {
                 <div className="job__item" key={job.id}>
                   <div>
                     <a target="_blank" className="job__title" href={job.url}>
-                      {job.jobName}
+                      {job.jobName} ({job.k})
                     </a>
                     <span className="job__city">{job.city}</span>
                   </div>

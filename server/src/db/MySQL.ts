@@ -17,7 +17,7 @@ export default class Datebase implements IDatabase  {
     return Datebase.instance;
   }
 
-  public connect(): Promise<void> {
+  public connect(): Promise<any> {
     return new Promise((resolve, rejects) => {
       this.db.connect((err) => {
         if(err) rejects(err);
@@ -26,7 +26,7 @@ export default class Datebase implements IDatabase  {
     });
   }
 
-  public close(): Promise<void> {
+  public close(): Promise<any> {
     return new Promise((resolve, rejects) => {
       this.db.end(err => {
         if (err) rejects(err);
@@ -35,7 +35,7 @@ export default class Datebase implements IDatabase  {
     });
   }
 
-  public query(query: string): Promise<void> {
+  public query(query: string): Promise<any> {
     return new Promise((resolve, rejects) => {
       this.db.query(query, (err, results) => {
         if (err) rejects(err);
